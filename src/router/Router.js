@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import * as Scroll from 'react-scroll';
+
 import {Switch, Route, withRouter} from "react-router-dom";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import Lead from "../Components/Lead/Lead"
@@ -7,7 +9,6 @@ import Route1 from "../routes/Route1/Route1"
 import Route2 from "../routes/Route2/Route2"
 import Route3 from "../routes/Route3/Route3"
 import Route4 from "../routes/Route4/Route4"
-
 import Navbar from '../Components/Navbar/Navbar'
 
 class Router extends Component {
@@ -17,7 +18,7 @@ class Router extends Component {
 				<Navbar />
 
 				<Lead>
-					<Home></Home>
+					<Home />
 				</Lead>
 
 				<TransitionGroup>
