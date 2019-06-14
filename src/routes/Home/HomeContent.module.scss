@@ -1,0 +1,18 @@
+.container {
+  bottom: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  transition: transform cubic-bezier(.6,.01,.43,1) 1.5s, height cubic-bezier(.6,.01,.43,1) 1.5s;
+}
+
+.contentMedia {
+  position: absolute;
+  min-height: 100%;
+  min-width: 100vw;
+  object-fit: cover;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
