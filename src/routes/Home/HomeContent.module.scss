@@ -1,4 +1,4 @@
-.container {
+.slide_container {
   bottom: 0;
   position: absolute;
   width: 100%;
@@ -7,12 +7,16 @@
   transition: transform cubic-bezier(.6,.01,.43,1) 1.5s, height cubic-bezier(.6,.01,.43,1) 1.5s;
 }
 
-.contentMedia {
+:global .slider_button_container {
+  right: 0;
   position: absolute;
-  min-height: 100%;
-  min-width: 100vw;
-  object-fit: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 20px;
+  height: auto;
   top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateY(-50%);
+  margin: 0 5% 0 auto;
+  z-index: 2;
 }

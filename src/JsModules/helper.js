@@ -8,7 +8,7 @@ export const pageTransition = (params) => {
 	const $videoLayer = document.querySelector('#lead__layer--video');
 	const $canvasLayer = document.querySelector('#lead__layer--canvas');
 
-	setTimeout(function () {
+	const changeLead = () => {
 		if (params.backgroundColor) {
 			$colorLayer.style.transition = "all 0s;";
 			$colorLayer.style.backgroundColor = params.backgroundColor;
@@ -49,7 +49,17 @@ export const pageTransition = (params) => {
 		}
 
 		$lead.style.transition = "height .7s ease, background .4s ease, opacity .4s"; // visszatérő animáció paraméterei. itt csak azért kell h a .4s deklarálva legyen, hogy ne vesszen el a .7s delkarálása közben
-	}, params.timeout); // <- attól függ h direkt linken lett-e megnyitva vagy sem
+	};
+
+	if (params.needsTransition) {
+		setTimeout(function () {
+			changeLead()
+		}, params.timeout); // <- attól függ h direkt linken lett-e megnyitva vagy sem
+	} else {
+		changeLead()
+	}
+
+
 
 	setTimeout(function () {
 		$lead.style.height = `${params.height}vh`;
@@ -73,7 +83,7 @@ export const changeHeaderTextColor = (color) => {
 	} else {
 		$header.className = `${color}-text`
 	}
-}
+};
 
 export const changeLeadText = (title, subtitle, color, position, hasCountDown = false) => {
 	changeHeaderTextColor(color);
@@ -155,7 +165,7 @@ export const listenForTop100px = () => {
 			}
 		}
 		this.oldScroll = this.scrollY;
-	}
+	};
 
 	window.addEventListener("mousemove", (e) => {
 		const y = e.clientY;
@@ -166,4 +176,69 @@ export const listenForTop100px = () => {
 			isInTop100px = false;
 		}
 	})
-}
+};
+
+export const animateLeadTextUp = (titleId = 6) => {
+	Array.from(document.querySelectorAll(`#caption_box_${titleId} .lead_title_row`)).forEach((row, index, array) => {
+		const timeoutForSubtitle = index * 500 + 1000;
+		const timeoutForNextRow = index * 300; // a két sor felbukkanása közti különbség
+		setTimeout(function () {
+			for (let i = 0; i < row.children.length; i++) {
+				if (i === 0 || i % 2 === 0) {
+					const groupedLetters = Array.from(document.querySelectorAll(`#caption_box_${titleId} .header-row-${index}-letter-group-${i}`));
+					const timeoutAmount = i * 25; // a kettes blokkok felbukkanása közti különbség
+					setTimeout(function() {
+						groupedLetters.forEach(x=>x.classList.remove('letter_pushed_down'))
+					}, timeoutAmount)
+				}
+			}
+		}, timeoutForNextRow);
+
+		if (index === array.length-1) {
+			const button = document.querySelector(`#caption_box_${titleId} .mainPageButton`);
+			const description = document.querySelector(`#caption_box_${titleId} .lead_description`);
+			setTimeout(function () {
+				if (description) {
+					description.style.opacity = 1;
+					description.style.transform = "translateY(0%)";
+				}
+			}, timeoutForSubtitle);
+			if (button) {
+				setTimeout(() => {
+					button.classList.add('animatable');
+				}, 1500)
+			}
+		}
+	});
+};
+
+export const animateLeadTextDown = (titleId = 6) => {
+	Array.from(document.querySelectorAll(`#caption_box_${titleId} .lead_title_row`)).forEach((row, index, array) => {
+		const timeoutForNextRow = index * 50; // a két sor felbukkanása közti különbség
+		setTimeout(function () {
+			for (let i = 0; i < row.children.length; i++) {
+				if (i === 0 || i % 2 === 0) {
+					const groupedLetters = Array.from(document.querySelectorAll(`#caption_box_${titleId} .header-row-${index}-letter-group-${i}`));
+					const timeoutAmount = i * 20; // a kettes blokkok felbukkanása közti különbség
+					setTimeout(function () {
+						groupedLetters.forEach(x=>x.classList.add("letter_pushed_down"))
+					}, timeoutAmount)
+				}
+			}
+		}, timeoutForNextRow);
+
+		if (index === array.length-1) {
+			const button = document.querySelector(`#caption_box_${titleId} .mainPageButton`);
+			const description = document.querySelector(`#caption_box_${titleId} .lead_description`);
+			if (description) {
+				description.style.opacity = 0;
+				description.style.transform = "translateY(50%)";
+			}
+			if (button) {
+				setTimeout(() => {
+					button.classList.remove('animatable');
+				}, 2000)
+			}
+		}
+	});
+};

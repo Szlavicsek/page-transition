@@ -1,0 +1,131 @@
+@import "../../assets/scss/variables.module";
+@import "../../assets/scss/mixins.module";
+
+.wrapper {
+  position: absolute;
+  width: 100vw;
+  background-color: blue
+}
+
+//****************************************** STYLES APPLIED TO THE WHOLE PAGE ******************************************
+
+.inner {
+  @include inner;
+}
+
+//*************************************************** SERVICES SECTION *************************************************
+
+.works_section {
+  background-color: #241E29;
+}
+
+.media_wrapper {
+  @include screen-splitting-media;
+}
+
+.media_inner {
+  @include mediaInner;
+}
+
+.media_image {
+  @include absolute-centered;
+}
+
+.lead_info {
+  position: relative;
+  display: block;
+  width: 90%;
+  margin: 30px auto 0 auto;
+}
+
+.lead_image_title, .work_image_title {
+  color: $light_font_color;
+}
+
+.lead_image_title {
+  @include Avenir-Black-M(bold);
+  line-height: 45px;
+  margin-left: 30px;
+}
+
+.lead_image_subtitle {
+  @include Avenir-Roman-S(normal);
+  color: #999;
+  margin-left: 30px;
+}
+
+.lead_media_sunken {
+  //display: none
+}
+
+.works_grid_wrapper {
+  padding-top: 200px;
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  @media(max-width: 480px) {
+    padding-top: calc(70vh + 50px);
+    width: 100%;
+  }
+}
+
+.works_bottom {
+  margin-top: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.load_more {
+  color: $light_font_color;
+  background-color: #6E00FF;
+  border-color: #6E00FF;
+  padding-right: 70px;
+  padding-left: 70px;
+}
+
+.disclaimer {
+  @include Avenir-Roman-M(normal);
+  color: #999;
+  text-align: center;
+  width: 60%;
+  padding: 150px 0 230px 0;
+}
+
+.brands_wrapper {
+  position: relative;
+  background-color: #fff;
+}
+
+.brands_text {
+  @include Avenir-Black-XXL;
+  text-align: center;
+  padding: 140px 0;
+  margin: 0;
+}
+
+.logo_grid_wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding-bottom: 100px;
+}
+
+.brand_logo {
+  flex-basis: 20%;
+  display: flex;
+  margin: 50px 0;
+  justify-content: center;
+}
+
+
+// SPINNER
+
+.spinner_overlay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: #211C25;
+}

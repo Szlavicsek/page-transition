@@ -1,0 +1,195 @@
+@import "../../../assets/scss/variables.module";
+//carouselProgressButton
+
+.button__wrapper {
+  opacity: 0.6;
+  transition: all 0.3s; // a gomb mérete köröstül-mindenestül
+  transform: scale(0.5);
+  height: 30px;
+  &:hover {
+    opacity: 1;
+  }
+  &:nth-child(1) {
+    :global .circle-button {
+      transition-delay: .5s;
+    }
+    :global .svgCircle {
+      transition-delay: .5s;
+    }
+  }
+  &:nth-child(2) {
+    :global .circle-button {
+      transition-delay: .4s;
+    }
+    :global .svgCircle {
+      transition-delay: .4s;
+    }
+  }
+  &:nth-child(3) {
+    :global .circle-button {
+      transition-delay: .3s;
+    }
+    :global .svgCircle {
+      transition-delay: .3s;
+    }
+  }
+  &:nth-child(4) {
+    :global .circle-button {
+      transition-delay: .2s;
+    }
+    :global .svgCircle {
+      transition-delay: .2s;
+    }
+  }
+  &:nth-child(5) {
+    :global .circle-button {
+      transition-delay: .1s;
+    }
+    :global .svgCircle {
+      transition-delay: .1s;
+    }
+  }
+  &:nth-child(6) {
+    :global .circle-button {
+      transition-delay: 0s;
+    }
+    :global .svgCircle {
+      transition-delay: 0s;
+    }
+  }
+}
+
+:global .circle-button {
+  visibility: hidden;
+  transform: scale(0.3);
+  position: relative;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  border-radius: 30px;
+  padding: 10px 10px 9px 10px;
+  margin-left: -10px;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  display: inline-block;
+  transition: background-color 0.4s;
+  &:hover {
+    cursor: pointer
+  }
+}
+
+:global .circle-button--animated-in  {
+  visibility: visible !important;
+  animation: popup .5s;
+}
+
+@keyframes popup {
+  0% {
+    transform: scale(0)
+  }
+  50% {
+    transform: scale(0.6)
+  }
+  100% {
+    transform: scale(0.3)
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.white {
+  :global .circle-button {
+    background-color: #999;
+    &:hover {
+      background-color: #FFF;
+    }
+  }
+}
+.black {
+  :global .circle-button {
+    background-color: #232323;
+    &:hover {
+      background-color: #000;
+    }
+  }
+}
+
+.active {
+  opacity: 1;
+  transform: scale(0.75) translateY(-2px); // active state
+  &:hover {
+    :global .circle-button, :global .svgCircle {
+      transition-delay: 0s;
+    }
+  }
+  &.white {
+    :global .circle-button {
+      background-color: #FFF;
+    }
+    :global .svgCircle {
+      stroke: #FFF;
+    }
+  }
+  &.black {
+    :global .circle-button {
+      background-color: #000;
+    }
+    :global .svgCircle {
+      stroke: #000;
+    }
+  }
+}
+
+:global(.animatedCircleButton) {
+  visibility: visible !important;
+  animation: popup .5s;
+}
+
+@keyframes popup {
+  0% {
+    transform: scale(0)
+  }
+  50% {
+    transform: scale(0.6)
+  }
+  100% {
+    transform: scale(0.3)
+  }
+}
+
+.round_progress { // a kör progress_button_circle
+  position: absolute;
+  top:-5px;
+  left:-5px;
+  transform: scale(1.3);
+}
+
+
+
+:global(.circleStroke) { //   ???
+  transition: stroke 0.3s;
+}
+
+.carousel_navigation { //   na ez mi
+  vertical-align: middle; //kell
+  width: 24px;
+  height: 24px;
+}
+
+:global(.hidden) {
+  display: none
+}

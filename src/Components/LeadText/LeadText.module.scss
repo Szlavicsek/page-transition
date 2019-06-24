@@ -1,0 +1,313 @@
+@import "../../assets/scss/variables.module";
+@import "../../assets/scss/mixins.module";
+
+:global(.lead_caption_container) {
+  visibility: hidden;
+  z-index: 1;
+  width: 100%;
+  position: absolute;
+  pointer-events: none;
+}
+
+:global(.lead_caption_inner) {
+  top: 50%;
+  transform: translateY(-50%);
+  position: relative;
+  //max-width: 55%;
+  left: 10vw;
+  @media(max-width: 480px) { // belőni mindegyik szöveget
+    max-width: 100%;
+  }
+}
+
+.container {
+  position: absolute;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.contentMedia {
+  position: absolute;
+  min-height: 100%;
+  max-height: 100%;
+  min-width: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.background {
+  position: absolute;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+}
+
+:global(.left-center) {
+  height: 100vh;
+
+}
+
+:global(.left-top) {
+  height: 60vh;
+}
+
+:global(.center-bottom) {
+  height: 40vh;
+  :global(.lead_caption_inner) {
+    top: 100%;
+    left: 50%;
+    transform:translate(-50%, -50%);
+    :global(.lead-title) {
+      display: flex;
+      justify-content: center;
+      position: relative;
+      margin-bottom: 50px;
+    }
+  }
+}
+
+//:global(.left-bottom) {
+//  height: 60vh;
+//  :global(.lead_caption_inner) {
+//    top: 100%;
+//    transform: translateY(-50%);
+//  }
+//}
+
+
+:global(.lead_title_row) {
+  position: relative;
+  margin-bottom: 1rem;
+  max-height: 70px;
+  display: flex;
+  overflow-y: hidden;
+  flex-wrap: wrap;
+  @media (max-width: 1280px) {
+    max-height: 65px;
+  }
+
+  @media (max-width: 960px) {
+    max-height: 52px;
+  }
+
+  @media (max-width: 360px) {
+    max-height: 45px;
+  }
+}
+
+:global(.lead_title_row_small) {
+  max-height: 54px;
+  margin-bottom: 0;
+  &:last-child {
+    margin-bottom: 150px;
+  }
+}
+
+:global(.lead_title_letter) {
+  @include Avenir-Black-XXL;
+  display: inline-block;
+  min-width: 13px; // az üres karakterek miatt kell
+  transition: color .5s, padding .75s ease, transform .75s ease;
+  @media (max-width: 1280px) {
+  }
+  @media (max-width: 960px) {
+  }
+  @media (max-width: 360px) {
+    min-width: 7px;
+  }
+  &::selection {
+    background-color: transparent;
+  }
+}
+
+:global(.customer_reference) {
+    @include Avenir-Black-XL;
+}
+
+:global(.letter_pushed_down) {
+  transform: translateY(70px);
+
+  @media (max-width: 1280px) {
+    transform: translateY(65px);
+  }
+
+  @media (max-width: 960px) {
+    transform: translateY(52px);
+  }
+
+  @media (max-width: 360px) {
+    transform: translateY(45px);
+    padding-top: 45px;
+  }
+}
+
+:global(.lead_description) {
+  opacity: 0;
+  transform: translateY(50%);
+  transition: all .5s;
+  @include Avenir-Roman-M(normal);
+}
+
+@media (min-width: 1500px) {
+  .lead_caption_inner {
+    max-width: 50%;
+  }
+}
+
+@media (max-width: 1140px) {
+  .lead_caption_inner {
+    max-width: 75%;
+  }
+  //.lead_title {
+  //  font-size: 55px;
+  //}
+
+  //.lead_description {
+  //  font-size: 20px;
+  //}
+}
+
+.button_container {
+  position: absolute;
+  bottom: -150px;
+}
+
+.word {
+  display: inline-block;
+  white-space: pre;
+  margin-right: 13px
+}
+
+.customer_label {
+  display: flex;
+  height: 50px;
+}
+
+.customer_image {
+  margin-right: 20px;
+  width: 50px;
+  display: inline-block;
+  border-radius: 25px;
+}
+
+.customer_name {
+  @include Avenir-Black-S(bold);
+  display: block;
+}
+
+.customer_detail {
+  pointer-events: auto;
+  @include Avenir-Roman-S(normal);
+  display: block;
+  color: $lightgrey;
+  a {
+    color: $lightgrey;
+    text-decoration: underline;
+    transition: all .3s;
+    &:hover {
+      color: #232323;
+    }
+  }
+}
+
+//**********************************************************************************************************************
+//**********************************************************************************************************************
+//**********************************************************************************************************************
+//**********************************************************************************************************************
+//**********************************************************************************************************************
+//**********************************************************************************************************************
+//**********************************************************************************************************************
+
+.absolutely {
+  position: absolute;
+  bottom: -120px;
+  left: 0%;
+  display: flex;
+  justify-content: center;
+}
+
+.button {
+  @include Avenir-Black-S(bold);
+  display: block;
+  padding: 12px 0;
+  position: relative;
+  pointer-events: auto;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  height: 50px;
+  width: calc(100% - 20px);
+  border: none;
+  border-radius: 50px;
+  outline: none;
+  background-color: $dark_purple;
+  text-align: center;
+  white-space: nowrap;
+  visibility: hidden;
+}
+
+:global(.animatable) {
+  visibility: visible !important;
+  animation: buttonPopup 1.2s;
+}
+
+@keyframes buttonPopup {
+  0% {
+    animation-timing-function: linear;
+    width: 50px;
+    transform: translateY(50%) scale(0);
+    opacity: 0;
+    color: transparent;
+  }
+  30% {
+    animation-timing-function: ease-in;
+    transform: translateY(0%) scale(1);
+    width: 50px;
+  }
+  40% {
+    opacity: 1;
+  }
+  60% {
+    animation-timing-function: ease-out;
+    color: transparent;
+    width: 100%;
+  }
+  100% {
+    width: calc(100% - 20px);
+  }
+}
+
+:global(.mainButtonDisappearing) {
+  animation: buttonDisappear .8s;
+}
+
+@keyframes buttonDisappear {
+  0% {
+    animation-timing-function: ease-in;
+    width: calc(100% - 20px);
+  }
+  30% {
+    animation-timing-function: ease-in-out;
+    width: 100%;
+  }
+  40% {
+    color: transparent;
+  }
+  60% {
+    animation-timing-function: linear;
+    transform: translateY(0%) scale(1);
+    width: 50px;
+  }
+  100% {
+    width: 50px;
+    transform: translateY(50%) scale(0);
+    color: transparent;
+  }
+}

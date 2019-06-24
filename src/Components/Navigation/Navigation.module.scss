@@ -1,0 +1,408 @@
+@import "../../assets/scss/variables.module";
+@import "../../assets/scss/mixins.module";
+
+//************************************************** DESKTOP NAVIGATION **************************************************
+
+:global #header {
+  position: fixed;
+  width: 100vw;
+  top: 0;
+  z-index: 100;
+  transition: background-color 0.5s;
+}
+
+:global .desktop-navigation-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 150px;
+  margin: 0 auto;
+  padding: 0 5%;
+  transform: translateY(-150px);
+}
+
+.melkweg_logo_wrapper {
+  transform: scale(0.9);
+  @media (max-width: 480px) {
+    transform: scale(0.75)
+  }
+}
+
+.melkweg_logo {
+  pointer-events: none;
+  width: 30px;
+  height: 30px;
+  polygon {
+    fill: #FFF
+  }
+}
+
+.link_container {
+  display: flex;
+  list-style: none;
+  width: 410px;
+  justify-content: space-between;
+}
+
+.link_wrapper {
+  position: relative;
+  height: 32px;
+  &:nth-child(1) {
+    width: 56px;
+  }
+  &:nth-child(2) {
+    width: 81px;
+  }
+  &:nth-child(3) {
+    width: 68px;
+  }
+  &:nth-child(4) {
+    width: 40px;
+  }
+  &:after {
+    content: " ";
+    position: absolute;
+    background-color: #FFF;
+    width: 0%;
+    height: 3px;
+    right: 0;
+    bottom: 0;
+    transition: bottom .3s ease;
+  }
+  &:hover {
+    &:after {
+      transition: 1s width cubic-bezier(1,.01,0,1);
+      width: 100%;
+      bottom: 5px;
+    }
+    .link_text {
+      transform: translateY(-5px);
+    }
+  }
+}
+
+.link_text {
+  @include Avenir-Black-M(normal);
+  transition: transform .3s;
+  position: absolute;
+  color: #FFF;
+}
+
+.wave_icon {
+  cursor: pointer;
+  display: inline-block;
+  background-color: transparent;
+  border: none;
+  width: 30px;
+  outline: none;
+  padding: 0;
+  path {
+    fill: #FFF;
+  }
+}
+
+//************************************************** MOBILE NAVIGATION **************************************************
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+:global(.black-text) {
+  .melkweg_logo {
+    polygon {
+      fill: $dark_font_color;
+    }
+  }
+  .link_wrapper {
+    color: $dark_font_color;
+    &:after {
+      background-color: $dark_font_color;
+    }
+  }
+  .wave_icon {
+    path {
+      fill: $dark_font_color;
+    }
+  }
+}
+
+:global(.white-text) {
+  .melkweg_logo {
+    polygon {
+      fill: #FFF;
+    }
+  }
+  .link_wrapper {
+    color: #FFF;
+    &:after {
+      background-color: #FFF;
+    }
+  }
+  .wave_icon {
+    path {
+      fill: #FFF;
+    }
+  }
+}
+
+:global(.transitioning) {
+  .melkweg_logo {
+    polygon {
+      transition: fill .5s;
+    }
+  }
+  .link_wrapper {
+    transition: color .5s;
+    &:after {
+      transition: .5s background-color;
+    }
+  }
+  .wave_icon {
+    path {
+      transition: fill .5s;
+    }
+  }
+}
+
+//********************************************* HEADROOM LIFECYCLE CLASSES *********************************************
+
+:global(.pinned) {
+  transition: height 1s, transform .2s ease-out, background-color .5s, color .5s;
+  height: 100px !important;
+  transform: translateY(0) !important;
+  background-color: white;
+  * {
+    color: black !important;
+    fill: black !important;
+  }
+  .link_wrapper:after {
+    background-color: black;
+  }
+}
+
+:global(.unpinned) {
+  transform: translateY(-150) !important;
+}
+
+:global(.unfixed) {
+  background-color: transparent;
+  transform: translateY(0) !important;
+}
+
+.inner {
+  padding: 0 5%;
+  height: 150px;
+  transform: translateY(-150px);
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  align-items: center;
+}
+
+:global(.transitioning) {
+  .inner {
+    transition: height 1s, transform .2s ease-out, background-color .5s, color .5s;
+  }
+}
+
+
+.link_active {
+  &:after {
+    transition: 1s width cubic-bezier(1,.01,0,1) !important;
+    width: 100% !important;
+    bottom: 5px !important;
+  }
+  .link_text {
+    transform: translateY(-5px) !important;
+  }
+}
+
+//.link_wrapper:after, :global(.mobile_menu_link:after) {
+//  content: " ";
+//  position: absolute;
+//  background-color: black;
+//  width: 0%;
+//  height: 3px;
+//  right: 0;
+//  bottom: 0;
+//  transition: bottom .3s ease;
+//}
+
+:global(.mobile_menu_link:after) {
+  background-color: #FFF
+}
+
+
+
+//.hamburger {
+//  position: relative;
+//  width: 35px;
+//  opacity: 1;
+//  transition: opacity 1s;
+//  cursor: pointer;
+//  @media (max-width: 480px) {
+//    width: 30px;
+//  }
+//}
+
+//  ${props.mobileMenuIsOpen ? styles.hamburger_opened : ""}
+
+.hamburger_opened {
+  opacity: 0;
+}
+
+.hamburger_mobile {
+  position: relative;
+  width: 35px;
+  margin: 50px 50px 0 auto;
+  svg {
+    &:hover {
+      cursor: pointer;
+      //path {
+      //  fill: #999;
+      //}
+    }
+  }
+}
+
+.hamburger_mobile_close_button {
+  width: 100%;
+}
+
+.hamburger_icon {
+  position: absolute;
+  right: 5%;
+  transform: scale(0.75) translateX(-25%);
+  display: none;
+  z-index: 2;
+  svg path {
+    transition: fill .5s;
+  }
+}
+
+.fixed {
+  position: fixed;
+}
+
+@media (max-width: 768px) {
+  .hamburger_icon {
+    display: block;
+  }
+
+  .link_container {
+    display: none;
+  }
+}
+
+
+
+@media (min-width: 768px) and (max-width:1280px) {
+  width: 4vw;
+  height: auto;
+}
+
+@media (min-width: 1281px) {
+  width: 2.5vw;
+  height: auto;
+}
+
+//***********************************************************************************************************
+//***********************************************************************************************************
+//***********************************************************************************************************
+//***********************************************************************************************************
+
+:global(.mobile_menu) {
+  display: none;
+  position: fixed;
+  overflow: hidden;
+  top: 50px;
+  right: 5%;
+  width: 50px;
+  height: 50px;
+  @media(max-width: 960px) {
+    display: block;
+  }
+}
+
+:global(.mobile_menu_circle) {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-color: $graphite;
+  top: 50px;
+  right: 5%;
+  border-radius: 50%;
+  transition: all cubic-bezier(.1,.6,.3,.96) 0.5s;
+  transform: scale(0);
+}
+
+:global(.mobile_menu_opened) {
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+:global(.mobile_menu_link_fade_in) {
+  transition: all .5s !important;
+  opacity: 1 !important;
+  transform: translateX(0%) !important;
+}
+
+:global(.mobile_menu_link_fade_out) {
+  transition: all .1s;
+  opacity: 0;
+  transform: translateX(30%);
+}
+
+.mobile_menu_circle_opened {
+  transform: scale(30)
+}
+
+:global(.links_container_mobile) {
+  display: none;
+  position: fixed;
+  flex-direction: column;
+  list-style: none;
+  top: 50vh;
+  right: 5%;
+  transform: translateY(-50%);
+  li {
+    opacity: 0;
+    transform: translateX(30%);
+    margin: 5px 0;
+  }
+}
+
+.link {
+  color: $light_font_color;
+  @include Avenir-Black-L(nomral)
+}

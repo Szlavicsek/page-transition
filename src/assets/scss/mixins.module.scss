@@ -1,0 +1,188 @@
+@import "variables.module";
+
+@mixin aspect-ratio($width, $height) {
+  position: relative;
+  &:before {
+    display: block;
+    content: "";
+    width: 100%;
+    padding-top: ($height / $width) * 100%;
+  }
+  > .content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+
+@mixin Avenir-Black-XXL {
+  font-family: "Avenir-Black", sans-serif;
+  font-size: 50px;
+  line-height: 70px;
+  font-weight: bold;
+  @media (max-width: 1280px) {
+    font-size: 50px;
+    line-height: 65px;
+  }
+  @media (max-width: 960px) {
+    font-size: 45px;
+    line-height: 52px;
+  }
+  @media (max-width: 360px) {
+    font-size: 30px;
+    line-height: 45px;
+  }
+}
+
+@mixin Avenir-Black-XL {
+  font-family: "Avenir-Black", sans-serif;
+  font-size: 35px;
+  line-height: 52px;
+  font-weight: bold;
+}
+
+@mixin Avenir-Black-L($weight) {
+  font-family: "Avenir-Black", sans-serif;
+  font-size: 25px;
+  line-height: 45px;
+  font-weight: $weight;
+}
+
+@mixin Avenir-Black-M($weight) {
+  font-family: "Avenir-Black", sans-serif;
+  font-size: 18px;
+  line-height: 29px;
+  font-weight: $weight;
+  @media (max-width: 480px) {
+    font-size: 15px;
+    line-height: 25px;
+  }
+}
+
+@mixin Avenir-Roman-M($weight) {
+  font-family: "Avenir-Light", sans-serif;
+  font-size: 18px;
+  line-height: 29px;
+  font-weight: $weight;
+  @media (max-width: 480px) {
+    font-size: 15px;
+    line-height: 25px;
+  }
+}
+
+@mixin Avenir-Black-S($weight) {
+  font-family: "Avenir-Black", sans-serif;
+  font-size: 15px;
+  line-height: 24px;
+  font-weight: $weight;
+}
+
+@mixin Avenir-Roman-S($weight) {
+  font-family: "Avenir-Light", sans-serif;
+  font-size: 15px;
+  line-height: 24px;
+  font-weight: $weight;
+}
+
+@mixin Avenir-Roman-XS($weight) {
+  font-family: "Avenir-Light", sans-serif;
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: $weight;
+}
+
+@mixin Avenir-Roman-XXS($weight) {
+  font-family: "Avenir-Light", sans-serif;
+  font-size: 8px;
+  line-height: 14px;
+  font-weight: $weight;
+}
+
+@mixin centeredAbsolute {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 100%;
+  min-height: 100%;
+}
+
+@mixin absolute-centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 100%;
+  min-height: 100%;
+}
+
+@mixin inner {
+  position: relative;
+  width: 92%;
+  margin: 0 auto;
+}
+
+@mixin mediaInner {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+@mixin page-top($color) {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 40vh;
+  background-color: $color
+}
+
+@mixin screen-splitting-media {
+  width: 100%;
+  height: 80vh;
+}
+
+@mixin aspect-ratio($width, $height) {
+  position: relative;
+  &:before {
+    display: block;
+    content: "";
+    width: 100%;
+    padding-top: ($height / $width) * 100%;
+  }
+  > .content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+@mixin purple-button {
+  display: inline;
+  background-color: $purple;
+  border-color: $purple !important;
+  color: $light_font_color;
+  &:hover {
+    color: $dark_font_color;
+    background-color: #fff;
+  }
+}
+
+@mixin social-icon {
+  width: 50px;
+  height: 50px;
+  margin: 0 10px;
+  path {
+    transition: fill 0.2s;
+  }
+  &:hover {
+    path {
+      fill: #999
+    }
+  }
+}
