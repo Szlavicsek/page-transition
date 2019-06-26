@@ -19,6 +19,8 @@ class HomeContent extends Component {
 						position="left-center"
 						textColor="#FFF"
 						title={["Digital?", "That's what we do"]}
+						buttonText="Explore our work"
+						linkto="/works"
 						subtitle={"We are a digital agency"}/>
 					<div id="slideMedia0" className={this.props.className} style={{backgroundColor: "#6e00ff", height: "100%"}}></div>
 				</div>
@@ -26,18 +28,26 @@ class HomeContent extends Component {
 				<div id="slideContainer1" className={`slideContainer ${styles.slide_container}`} style={{zIndex: -1}}>
 					<LeadText
 						id="1"
+						position="left-center"
+						textColor="#FFF"
 						title={["Digital?", "That's what we do"]}
+						buttonText="Explore our work"
+						linkto="/works"
 						subtitle={"We are a digital agency"}/>
 					<div id="slideMedia1" className={this.props.className} style={{overflow: "hidden", height: "0%"}}>
 						{/*a videókat be kell rakni egy wrapperbe, mert a 0% height valamiért nem hatja meg*/}
-						<video src={sample} className={this.props.className} loop autoPlay></video>
+						<video src={sample} className={this.props.className} loop autoPlay muted></video>
 					</div>
 				</div>
 
 				<div id="slideContainer2" className={`slideContainer ${styles.slide_container}`} style={{zIndex: -2}}>
 					<LeadText
 						id="2"
+						position="left-center"
+						textColor="#FFF"
 						title={["Digital?", "That's what we do"]}
+						buttonText="Explore our work"
+						linkto="/works"
 						subtitle={"We are a digital agency"}/>
 					<div id="slideMedia2" className={this.props.className} style={{overflow: "hidden", height: "0%"}}>
 						<img className={this.props.className} src={image} alt=""/>
@@ -48,8 +58,13 @@ class HomeContent extends Component {
 				<div id="slideContainer3" className={`slideContainer ${styles.slide_container}`} style={{zIndex: -3}}>
 					<LeadText
 						id="3"
+						position="left-center"
+						textColor="#FFF"
 						title={["Digital?", "That's what we do"]}
+						buttonText="Explore our work"
+						linkto="/works"
 						subtitle={"We are a digital agency"}/>
+
 					<div id="slideMedia3" className={this.props.className} style={{overflow: "hidden", height: "0%"}}>
 						<img className={this.props.className} src={image} alt=""/>
 					</div>
@@ -58,26 +73,28 @@ class HomeContent extends Component {
 				<div id="slideContainer4" className={`slideContainer ${styles.slide_container}`} style={{zIndex: -4}}>
 					<LeadText
 						id="4"
+						position="left-center"
+						textColor="#FFF"
 						title={["Digital?", "That's what we do"]}
+						buttonText="Explore our work"
+						linkto="/works"
 						subtitle={"We are a digital agency"} />
 					<img id="slideMedia4" className={this.props.className} src={image} style={{height: "0%"}} alt=""/>
 				</div>
 
 				<div id="slideContainer5" className={`slideContainer ${styles.slide_container}`} style={{zIndex: -5}}>
 					<LeadText id="5"
+							  position="left-center"
+							  textColor="#FFF"
 							  title={["Digital?", "That's what we do"]}
+							  buttonText="Explore our work"
+							  linkto="/works"
 							  subtitle={"We are a digital agency"} />
 					<img
 						id="slideMedia5" className={this.props.className} src={image} style={{height: "0%"}} alt=""/>
 				</div>
 
-				{this.props.canRenderSidebar ?
-					<div className="slider_button_container">
-						{Array.from(document.querySelectorAll(".slideContainer")).map((x, i) => {
-							return <SliderProgressButton key={i} id={i} activeSlideId={this.props.currentSlideId} click={(e) => this.loadNext(e)}/>
-						})}
-					</div>
-					: ""}
+
 			</div>
 		);
 	}

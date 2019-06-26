@@ -6,7 +6,7 @@ class Lead extends Component {
 	render() {
 		return (
 			<div className={`lead ${styles.lead}`}>
-				<HomeContent className={styles.lead__layer}/>
+				<HomeContent className={styles.lead__layer} canRenderSidebar={this.props.canRenderSidebar}/>
 				<div id="lead__layer--color" className={styles.lead__layer}></div>
 				<img id="lead__layer--image" className={styles.lead__layer} alt="" />
 				<video id="lead__layer--video" className={styles.lead__layer} src="" autoPlay loop></video>

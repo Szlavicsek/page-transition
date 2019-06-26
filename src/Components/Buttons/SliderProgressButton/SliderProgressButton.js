@@ -2,9 +2,6 @@ import React, {Component} from 'react';
 import styles from "./SliderProgressButton.module.scss";
 
 class CircleButton extends Component {
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log(this.props.textColor)
-    }
 
     render() {
         let color;
@@ -14,7 +11,7 @@ class CircleButton extends Component {
         
         return (
             <div id={this.props.id}
-                onClick={this.props.click}
+                onClick={(e) => this.props.click(e)}
                 className={`${styles.button__wrapper}
                             ${this.props.textColor === "white" ? styles.white : styles.black}
                             ${this.props.activeSlideId === Number(this.props.id) ? styles.active : ""}`}>

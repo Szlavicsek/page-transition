@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import * as help from "../../JsModules/helper";
+import SliderProgressButton from "../../Components/Buttons/SliderProgressButton/SliderProgressButton";
 
 class HomeLogic extends Component {
 
@@ -8,12 +9,8 @@ class HomeLogic extends Component {
         canRequest: false,
         nextButtonDisabled: false,
         currentSlideId: 0,
-        textColor: "white"
+        textColor: "light"
     };
-
-    handleCircleButtonClick(e) {
-        setTimeout((e) => this.loadNext(e), 1)
-    }
 
     animateCarouselButtonsPopup() {
         setTimeout(() => {
@@ -27,10 +24,10 @@ class HomeLogic extends Component {
     }
 
     initFirstAnimation(timeoutDelay, scrollTime) {
-        setTimeout(function () {
-            document.querySelector('.lead').style.backgroundImage = "";
-            document.querySelector('.lead').style.height = "100vh";
-        }, 800 + scrollTime);
+        // setTimeout(function () {
+        //     document.querySelector('.lead').style.backgroundImage = "";
+        //     document.querySelector('.lead').style.height = "100vh";
+        // }, 800 + scrollTime);
 
         setTimeout(() => {
             document.querySelectorAll('.lead_caption_container').forEach(x => {
@@ -55,6 +52,7 @@ class HomeLogic extends Component {
     }
 
     loadNext(event) {
+        console.log("loadNextClicked")
         if (!this.state.nextButtonDisabled) {
             // Ha már letelt a 750ms-os zár
             if (!event || Number(event.target.id) !== this.state.currentSlideId) {
@@ -71,9 +69,9 @@ class HomeLogic extends Component {
                     const slides = Array.from(document.querySelectorAll(`.slideContainer`));
                     updatedCurrentSlideId = this.state.currentSlideId === slides.length-1 ? 0 : this.state.currentSlideId + 1;
                 }
-
+                console.log(updatedCurrentSlideId);
                 this.props.changeCurrentSlideId(updatedCurrentSlideId);
-
+                console.log("id changed to " + updatedCurrentSlideId);
                 help.animateLeadTextDown(previousSlideId);
 
                 const animateSlideUp = () => {
@@ -119,15 +117,6 @@ class HomeLogic extends Component {
                     }
                 };
 
-                let textColor;
-
-                setTimeout(() => {
-                    // help.changeHeaderTextColor(textColor);
-                    this.setState({textColor: textColor})
-                }, 500);
-
-
-
                 // const $header = document.querySelector('#header');
                 //
                 // if ($header.classList.contains("transitioning")) {
@@ -135,6 +124,35 @@ class HomeLogic extends Component {
                 // } else {
                 //     $header.className = `white-text`
                 // }
+
+                let textColor;
+
+                setTimeout(() => {
+                    switch(updatedCurrentSlideId) {
+                        case 0:
+                            textColor = "light";
+                            break;
+                        case 1:
+                            textColor = "light";
+                            break;
+                        case 2:
+                            textColor = "light";
+                            break;
+                        case 3:
+                            textColor = "dark";
+                            break;
+                        case 4:
+                            textColor = "dark";
+                            break;
+                        case 5:
+                            textColor = "dark";
+                            break;
+                        default:
+                    }
+
+                    help.changeHeaderTextColor(textColor);
+                    this.setState({textColor: textColor})
+                }, 500);
 
                 this.setState({
                     currentSlideId: updatedCurrentSlideId,
@@ -170,9 +188,18 @@ class HomeLogic extends Component {
         }, 1000)
     }
 
+
     render() {
         return (
-            <></>
+            <>
+                {this.state.canRenderSidebar ?
+                    <div className="slider_button_container">
+                        {Array.from(document.querySelectorAll(".slideContainer")).map((x, i) => {
+                            return <SliderProgressButton textColor={this.state.textColor} key={i} id={i} activeSlideId={this.state.currentSlideId} click={(e) => this.loadNext(e)}/>
+                        })}
+                    </div>
+                    : <div></div>}
+            </>
         );
     }
 }

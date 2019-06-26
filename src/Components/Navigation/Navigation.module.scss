@@ -63,7 +63,7 @@
     content: " ";
     position: absolute;
     background-color: #FFF;
-    width: 0%;
+    width: 0;
     height: 3px;
     right: 0;
     bottom: 0;
@@ -71,7 +71,7 @@
   }
   &:hover {
     &:after {
-      transition: 1s width cubic-bezier(1,.01,0,1);
+      transition: 1s width cubic-bezier(1,.01,0,1) !important;
       width: 100%;
       bottom: 5px;
     }
@@ -82,7 +82,7 @@
 }
 
 .link_text {
-  @include Avenir-Black-M(normal);
+  @include Avenir-Black-M(bold);
   transition: transform .3s;
   position: absolute;
   color: #FFF;
@@ -181,7 +181,7 @@
   .link_wrapper {
     transition: color .5s;
     &:after {
-      transition: .5s background-color;
+      transition: bottom .3s ease, .5s background-color;
     }
   }
   .wave_icon {

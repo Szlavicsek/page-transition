@@ -16,7 +16,6 @@
 .animatingButton {
   @include Avenir-Black-S(bold);
   display: block;
-  padding: 12px 0;
   position: relative;
   pointer-events: auto;
   cursor: pointer;
@@ -31,4 +30,6 @@
   text-align: center;
   white-space: nowrap;
   visibility: hidden;
+  text-decoration: none;
+  line-height: 48px;
 }
