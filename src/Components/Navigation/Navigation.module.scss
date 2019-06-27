@@ -57,7 +57,7 @@
     width: 68px;
   }
   &:nth-child(4) {
-    width: 40px;
+    width: 42px;
   }
   &:after {
     content: " ";
@@ -141,7 +141,9 @@
     }
   }
   .link_wrapper {
-    color: $dark_font_color;
+    span {
+      color: $dark_font_color;
+    }
     &:after {
       background-color: $dark_font_color;
     }
@@ -160,7 +162,9 @@
     }
   }
   .link_wrapper {
-    color: #FFF;
+    span {
+      color: #FFF;
+    }
     &:after {
       background-color: #FFF;
     }

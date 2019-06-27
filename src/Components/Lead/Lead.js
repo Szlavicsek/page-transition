@@ -1,11 +1,20 @@
 import React, {Component} from 'react';
 import styles from "./Lead.module.scss"
 import HomeContent from "../../routes/Home/HomeContent"
+import LeadText from '../LeadText/LeadText'
 
 class Lead extends Component {
 	render() {
 		return (
 			<div className={`lead ${styles.lead}`}>
+				<div className='lead_title__wrapper'>
+					<LeadText
+						id="6"
+						position="left-top"
+						textColor="#000"
+						title={["Digital?", "That's what we do"]}
+						subtitle={"We are a digital agency"}/>
+				</div>
 				<HomeContent className={styles.lead__layer} canRenderSidebar={this.props.canRenderSidebar}/>
 				<div id="lead__layer--color" className={styles.lead__layer}></div>
 				<img id="lead__layer--image" className={styles.lead__layer} alt="" />

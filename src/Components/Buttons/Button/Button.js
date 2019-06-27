@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 const Button = (props) => {
 	//props: text, customClass, type, linkto, onClickHandler
 	if (props.linkto) {
+
 		return (
 			<Link id={props.id ? props.id : ""} className={`${props.buttonType === "animating" ? styles.animatingButton : styles.button} ${props.customClass ? props.customClass : ""}`} to={props.linkto}>{props.text}</Link>
 		)

@@ -3,17 +3,71 @@ import styles from "./Company.module.scss"
 import * as help from "../../JsModules/helper"
 import Button from '../../Components/Buttons/Button/Button'
 import BigFooter from '../../Components/Footers/BigFooter/BigFooter'
+import Card from '../../Components/Card/Card'
 
 import og from '../../assets/images/og-services.jpg';
+import { Link, withRouter } from "react-router-dom"
+import AOS from "aos";
 
 
 class Company extends Component {
+
+	state = {
+		isFetching: undefined,
+		lead: undefined,
+		crew: undefined
+	};
+
 	componentDidMount() {
+		console.log(this.props)
+		if (localStorage.getItem("melkwegteam")) {
+			this.setState({isFetching: false});
+			const response = JSON.parse(localStorage.getItem("melkwegteam"));
+			this.setState({
+				lead: response.data.lead,
+				crew: response.data.crew
+			})
+		} else {
+			this.setState({isFetching: true});
+			fetch("https://api.myjson.com/bins/1g8egn")
+				.then(response => response.json())
+				.then(response => {
+					this.setState({
+						isFetching: false,
+						lead: response.data.lead,
+						crew: response.data.crew
+					});
+					localStorage.setItem("melkwegteam", JSON.stringify(response))
+
+				})
+				.catch(err => {
+					console.log(err)
+					this.setState({isFetching: "error"})
+				});
+		}
+
 		help.pageTransition({height: 60, timeout: 500, scrollDuration: this.props.scrollDuration, backgroundColor: "#6e00ff", needsTransition: this.props.leadNeedsTransition});
+		help.changeLeadText(["Digital?", "That's what we do."], "Melkweg is a design consultancy and interactive production company", "white","left-top");
+		setTimeout(() => { help.animateLeadTextUp() }, 800); //=> help.changeleadtext
+		setTimeout(() => { AOS.refresh() }, 1500); //=> help.pagetransition
 		// help.pageTransition({height: 60, timeout: 500 + this.props.scrollDuration, backgroundColor: "transparent"});
 	}
 
 	render() {
+		let lead,
+			crew;
+
+		if (this.state.lead && this.state.crew) {
+			lead = this.state.lead.map((person, i) => {
+				return <Card key={i} size="big" title={person.name} description={person.position} pic={og}/>
+			});
+
+			crew = this.state.crew.map((person, i) => {
+				return <Card key={i} size="small" title={person.name} description={person.position} pic={og}/>
+			});
+
+			crew.push(<Card  key={this.state.crew.length} size="small" title="Wanna join?" description="Check out our open positions" yourcard/>);
+		}
 		return (
 			<div className={styles.wrapper}>
 				<div className={styles.page_top}></div>
@@ -87,12 +141,12 @@ class Company extends Component {
 						<h1 className={styles.team_header}>Our team</h1>
 						<div className={styles.team_leaders_wrapper}>
 							{/*<LazyLoad>*/}
-							{/*{ this.props.rendered.leaders }*/}
+							{ lead }
 							{/*</LazyLoad>*/}
 						</div>
 						<div className={styles.team_members_wrapper}>
 							{/*<LazyLoad>*/}
-							{/*{ this.props.rendered.crew }*/}
+							{ crew }
 							{/*</LazyLoad>*/}
 						</div>
 					</div>
@@ -161,4 +215,4 @@ class Company extends Component {
 	}
 }
 
-export default Company;
+export default withRouter(Company);

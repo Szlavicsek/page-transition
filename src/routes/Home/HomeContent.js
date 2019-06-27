@@ -32,11 +32,11 @@ class HomeContent extends Component {
 						textColor="#FFF"
 						title={["Digital?", "That's what we do"]}
 						buttonText="Explore our work"
-						linkto="/works"
+						linkto="/works/video"
 						subtitle={"We are a digital agency"}/>
 					<div id="slideMedia1" className={this.props.className} style={{overflow: "hidden", height: "0%"}}>
 						{/*a videókat be kell rakni egy wrapperbe, mert a 0% height valamiért nem hatja meg*/}
-						<video src={sample} className={this.props.className} loop autoPlay muted></video>
+						<video src={sample} className={this.props.className} loop muted></video>
 					</div>
 				</div>
 

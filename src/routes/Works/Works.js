@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import BigFooter from "../../Components/Footers/BigFooter/BigFooter";
-import { Link } from "react-router-dom"
+import { Link, withRouter } from "react-router-dom"
+import AOS from 'aos'
 
 import styles from "./Works.module.scss"
 import * as help from "../../JsModules/helper";
@@ -9,8 +10,15 @@ import leadImage from "../../assets/images/pexels-photo-39811.jpeg"
 import logo1 from "../../assets/images/cisco.PNG"
 
 class Works extends Component {
+	state = {
+		works: undefined,
+	};
+	
 	componentDidMount() {
 		help.pageTransition({height: 60, timeout: 500, scrollDuration: this.props.scrollDuration, backgroundColor: "#241E29", needsTransition: this.props.leadNeedsTransition});
+		help.changeLeadText(["We're proud of our work"], "Take a look at some of our recent projects", "white", "left-top");
+		setTimeout(() => { help.animateLeadTextUp() }, 800); //=> help.changeleadtext
+		setTimeout(() => { AOS.refresh() }, 1500); //=> help.pagetransition
 	}
 
 	render() {
@@ -65,4 +73,4 @@ class Works extends Component {
 	}
 }
 
-export default Works;
+export default withRouter(Works);

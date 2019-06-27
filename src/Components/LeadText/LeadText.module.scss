@@ -49,7 +49,7 @@
 }
 
 :global(.left-center) {
-  height: 100vh;
+  height: 100%;
 
 }
 
@@ -243,7 +243,8 @@
   font-weight: bold;
   font-size: 14px;
   height: 50px;
-  width: calc(100% - 20px);
+  //width: calc(100% - 20px);
+  width: 50px;
   border: none;
   border-radius: 50px;
   outline: none;
@@ -253,13 +254,14 @@
   visibility: hidden;
 }
 
-:global(.animatable) {
+:global(.button_animating--in) {
   visibility: visible !important;
   animation: buttonPopup 1.2s;
 }
 
 @keyframes buttonPopup {
   0% {
+    transform-origin: top center;
     animation-timing-function: linear;
     width: 50px;
     transform: translateY(50%) scale(0);
@@ -285,29 +287,32 @@
 }
 
 :global(.mainButtonDisappearing) {
-  animation: buttonDisappear .8s;
+  visibility: visible !important;
+  animation: buttonDisappear 1.6s;
 }
 
 @keyframes buttonDisappear {
   0% {
+    transform-origin: top center;
     animation-timing-function: ease-in;
     width: calc(100% - 20px);
   }
-  30% {
+  15% {
     animation-timing-function: ease-in-out;
     width: 100%;
   }
-  40% {
+  20% {
     color: transparent;
   }
-  60% {
+  30% {
     animation-timing-function: linear;
     transform: translateY(0%) scale(1);
     width: 50px;
   }
-  100% {
+  50% {
     width: 50px;
     transform: translateY(50%) scale(0);
     color: transparent;
   }
+  //50%-100%: safety padding to avoid unintended flashes
 }

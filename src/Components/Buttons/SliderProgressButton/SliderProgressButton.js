@@ -1,19 +1,14 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import styles from "./SliderProgressButton.module.scss";
 
 class CircleButton extends Component {
 
     render() {
-        let color;
-        if (this.props.activeSlideId === Number(this.props.id)) { // az aktív slider gomb
-            color = this.props.textColor === "dark" ? "#232323" : "#FFF";
-        }
-        
         return (
             <div id={this.props.id}
                 onClick={(e) => this.props.click(e)}
                 className={`${styles.button__wrapper}
-                            ${this.props.textColor === "white" ? styles.white : styles.black}
+                            ${this.props.textColor === "light" ? styles.white : styles.black}
                             ${this.props.activeSlideId === Number(this.props.id) ? styles.active : ""}`}>
 
                 <div className="circle-button">

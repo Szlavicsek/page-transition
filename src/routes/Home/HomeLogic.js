@@ -8,18 +8,15 @@ class HomeLogic extends Component {
         canRenderSidebar: false,
         canRequest: false,
         nextButtonDisabled: false,
-        currentSlideId: 0,
         textColor: "light"
     };
 
     animateCarouselButtonsPopup() {
-        setTimeout(() => {
-            this.setState({canRenderSidebar: true});
-            Array.from(document.querySelectorAll('.circle-button')).forEach((x, i)=>{
-                const delay = i * 125;
-                setTimeout(() => { x.classList.add('animatedCircleButton') }, delay)
-            })
-        }, 1000)
+        this.setState({canRenderSidebar: true});
+        Array.from(document.querySelectorAll('.circle-button')).forEach((x, i)=>{
+            const delay = i * 125;
+            setTimeout(() => { x.classList.add('animatedCircleButton') }, delay)
+        })
         // }, 1000 + help.getScrollDuration())
     }
 
@@ -33,7 +30,7 @@ class HomeLogic extends Component {
             document.querySelectorAll('.lead_caption_container').forEach(x => {
                 x.style.visibility= "visible";
             });
-            help.animateLeadTextUp(0)
+            help.animateLeadTextUp(this.props.currentSlideId)
         }, 350 + timeoutDelay + scrollTime);
 
         setTimeout(() => {
@@ -52,26 +49,23 @@ class HomeLogic extends Component {
     }
 
     loadNext(event) {
-        console.log("loadNextClicked")
         if (!this.state.nextButtonDisabled) {
             // Ha már letelt a 750ms-os zár
-            if (!event || Number(event.target.id) !== this.state.currentSlideId) {
+            if (!event || Number(event.target.id) !== this.props.currentSlideId) {
                 // ha magától váltott, vagy kattintva lett egy másik slide-ra mint ami éppen megy
                 // btn.afterburn = -1;
                 // btn.progress = -1;
 
                 let updatedCurrentSlideId;
-                const previousSlideId = this.state.currentSlideId;
+                const previousSlideId = this.props.currentSlideId;
 
                 if (event) {
                     updatedCurrentSlideId = Number(event.target.id);
                 } else {
                     const slides = Array.from(document.querySelectorAll(`.slideContainer`));
-                    updatedCurrentSlideId = this.state.currentSlideId === slides.length-1 ? 0 : this.state.currentSlideId + 1;
+                    updatedCurrentSlideId = this.props.currentSlideId === slides.length-1 ? 0 : this.props.currentSlideId + 1;
                 }
-                console.log(updatedCurrentSlideId);
                 this.props.changeCurrentSlideId(updatedCurrentSlideId);
-                console.log("id changed to " + updatedCurrentSlideId);
                 help.animateLeadTextDown(previousSlideId);
 
                 const animateSlideUp = () => {
@@ -83,12 +77,12 @@ class HomeLogic extends Component {
                         const $PreviousSlideContainer = document.querySelector(`#slideContainer${previousSlideId}`);
                         const $PreviousSlideMedia = document.querySelector(`#slideMedia${previousSlideId}`);
 
-                        const $NextSlideContainer = document.querySelector(`#slideContainer${this.state.currentSlideId}`);
-                        const $NextSlideMedia = document.querySelector(`#slideMedia${this.state.currentSlideId}`);
+                        const $NextSlideContainer = document.querySelector(`#slideContainer${this.props.currentSlideId}`);
+                        const $NextSlideMedia = document.querySelector(`#slideMedia${this.props.currentSlideId}`);
 
                         if ($NextSlideMedia) {
-                            $NextSlideMedia.style.transition = "all ease-in 0.75s";
-                            $PreviousSlideMedia.style.transition = "all ease-in 0.75s";
+                            $NextSlideMedia.style.transition = "all cubic-bezier(1,.86,.34,1) .75s";
+                            $PreviousSlideMedia.style.transition = "all cubic-bezier(1,.86,.34,1) .75s";
                             $NextSlideMedia.style.height = "100%";
 
                             // $NextSlideMedia.style.transform = "scale(1)";
@@ -195,7 +189,7 @@ class HomeLogic extends Component {
                 {this.state.canRenderSidebar ?
                     <div className="slider_button_container">
                         {Array.from(document.querySelectorAll(".slideContainer")).map((x, i) => {
-                            return <SliderProgressButton textColor={this.state.textColor} key={i} id={i} activeSlideId={this.state.currentSlideId} click={(e) => this.loadNext(e)}/>
+                            return <SliderProgressButton textColor={this.state.textColor} key={i} id={i} activeSlideId={this.props.currentSlideId} click={(e) => this.loadNext(e)}/>
                         })}
                     </div>
                     : <div></div>}

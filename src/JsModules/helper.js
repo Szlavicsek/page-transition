@@ -10,7 +10,7 @@ export const pageTransition = (params) => {
 
 	const changeLead = () => {
 		if (params.backgroundColor) {
-			$colorLayer.style.transition = "all 0s;";
+			$colorLayer.style.transition = "all 0s";
 			$colorLayer.style.backgroundColor = params.backgroundColor;
 			$colorLayer.style.opacity = 1;
 			$colorLayer.style.zIndex = 1;
@@ -90,7 +90,7 @@ export const changeLeadText = (title, subtitle, color, position, hasCountDown = 
 
 	setTimeout(() => {
 		const newLeadTitleRows = ReactDOMServer.renderToStaticMarkup(
-			<div className={`lead_caption_container ${position ? position : ""}`} style={{visibility: "visible"}}>
+			<div className={`lead_caption_container ${position ? position : ""}`} style={{visibility: "visible", zIndex: 10}}>
 				<div id="caption_box_6" className="lead_caption_inner">
 
 					<h1 className="lead-title">
@@ -114,14 +114,14 @@ export const changeLeadText = (title, subtitle, color, position, hasCountDown = 
 			</div>
 		);
 
-		document.querySelector('.lead_foreground').innerHTML = newLeadTitleRows
+		document.querySelector('.lead_title__wrapper').innerHTML = newLeadTitleRows
 
 	}, 750)
 };
 
 export const listenForTop100px = () => {
 	let isInTop100px = false;
-	const $navigation = document.querySelector('.navigation');
+	const $navigation = document.querySelector('.desktop-navigation-wrapper');
 
 	const onPin = () => {
 		$navigation.classList.add('pinned');
@@ -205,7 +205,8 @@ export const animateLeadTextUp = (titleId = 6) => {
 			}, timeoutForSubtitle);
 			if (button) {
 				setTimeout(() => {
-					button.classList.add('animatable');
+					button.style.opacity = 1;
+					button.classList.add('button_animating--in');
 				}, 1500)
 			}
 		}
@@ -236,7 +237,7 @@ export const animateLeadTextDown = (titleId = 6) => {
 			}
 			if (button) {
 				setTimeout(() => {
-					button.classList.remove('animatable');
+					button.classList.remove('button_animating--in');
 				}, 2000)
 			}
 		}

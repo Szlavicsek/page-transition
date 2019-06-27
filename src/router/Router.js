@@ -2,9 +2,11 @@ import React, {Component} from 'react';
 import * as Scroll from 'react-scroll';
 import AOS from 'aos';
 import * as help from "../JsModules/helper"
+import * as cookie from "../JsModules/cookie"
 
-import {Switch, Route, withRouter} from "react-router-dom";
+import { Switch, Route, withRouter } from "react-router-dom";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
+import OpenPositionLink from '../Components/OpenPositionLink/OpenPositionLink'
 import Lead from "../Components/Lead/Lead"
 import Company from "../routes/Company/Company"
 import Contact from "../routes/Contact/Contact"
@@ -12,6 +14,10 @@ import Works from "../routes/Works/Works"
 import Jobs from "../routes/Jobs/Jobs"
 import Navbar from '../Components/Navigation/Navigation'
 import HomeLogic from "../routes/Home/HomeLogic";
+import Video from "../routes/_Video/Video";
+import Policy from "../routes/Policy/Policy";
+
+let scroll = Scroll.animateScroll;
 
 class Router extends Component {
 
@@ -31,7 +37,12 @@ class Router extends Component {
 	}
 
 	componentDidMount() {
-
+		scroll.scrollToTop({
+			smooth: true,
+			duration: 1000,
+			// duration: help.getScrollDuration(),
+			isDynamic: true,
+		});
 		this.setState({leadNeedsTransition: true});
 
 		AOS.init();
@@ -44,30 +55,36 @@ class Router extends Component {
 		this.setState({timeoutForBgcChange: 500});
 
 
-		if (localStorage.getItem("melkwegData")) {
-			const melkwegData = JSON.parse(localStorage.getItem("melkwegData"));
+		if (localStorage.getItem("response")) {
+			const data = JSON.parse(localStorage.getItem("response"));
 			this.setState({
 				isFetching: false,
-				team: melkwegData.team
-			})
+				projects: data.projects,
+				team: data.team,
+				jobs: data.jobs,
+				job_carousel_images: data.job_carousel_images,
 			// }, () => this.renderEverything())
+			})
 		} else {
 			this.setState({isFetching: true});
-			fetch("https://api.myjson.com/bins/1g8egn")
+			fetch("https://api.myjson.com/bins/93bvj")
 				.then(response => response.json())
 				.then(data => {
-					// setTimeout(() => {
+					setTimeout(() => {
 						this.setState({
 							isFetching: false,
-							team: data.data
-						});
+							projects: data.projects,
+							team: data.team,
+							jobs: data.jobs,
+							job_carousel_images: data.job_carousel_images,
 						// }, () => this.renderEverything());
-						localStorage.setItem("melkwegData", JSON.stringify(data.data))
-					// }, 2000)
+						});
+						localStorage.setItem("response", JSON.stringify(data))
+					}, 2000)
 
 				})
 				.catch(err => {
-					console.log(err);
+					console.log(err)
 					this.setState({isFetching: "error"})
 				});
 		}
@@ -110,18 +127,35 @@ class Router extends Component {
 			console.log()
 		}, 250);
 		// }, 250 + help.getScrollDuration());
-		if (prevlocation === '/') {							//v lead-textbox--${}
+
+
+
+
+		if (prevlocation === '/') {
+			const path = this.props.location.pathname;
+
+			// conditions to leave animated text up;
+			const condition1 = path !== "/works/video" && this.state.currentSlideId !== 1;
+			const condition2 = path !== "/works/video" && this.state.currentSlideId !== 1;
+
+			console.log(condition1)
+			if (condition1 && condition2) {
+				help.animateLeadTextDown(this.state.currentSlideId);
+			}
+
+
+
+			//v lead-textbox--${}
 			const $button = document.querySelector(`#caption_box_${this.state.currentSlideId} .mainPageButton`); //button
 			Array.from(document.querySelectorAll('.circle-button')).forEach((x, i)=>{
 				const delay = i * 125;
 				setTimeout(() => { x.classList.remove('animatedCircleButton') }, delay)
 			})
-			console.log("animating down id " + this.state.currentSlideId)
-			help.animateLeadTextDown(this.state.currentSlideId);
-			if ($button) {
+			if ($button) { // ezt nem lehet átvonni a helper.js-be, mert akkor minden alkalommal leanimálódna a gomb ami a slideok kört nem jó
 				$button.classList.add("mainButtonDisappearing"); // button__animating--in
 				setTimeout(() => { $button.style.opacity = 0 }, 800);
-				setTimeout(() => { $button.classList.remove('animatable')}, 2000);
+				setTimeout(() => { $button.classList.remove('button_animating--in')}, 2000);
+				setTimeout(() => { $button.classList.remove('mainButtonDisappearing')}, 2000);
 			}
 		} else {
 			setTimeout(help.animateLeadTextDown);
@@ -129,6 +163,11 @@ class Router extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
+		// help.listenForTop100px(); // -> trackMousePositionForHeader / Navbar
+
+		// if (prevState.loadingScreenIsVisible && !this.state.loadingScreenIsVisible) {
+		// 	cookie.init();
+		// }
 		if (prevProps.location !== this.props.location) {
 			setTimeout(() =>{
 				document.querySelector(".lead").style.height = "100vh";
@@ -161,12 +200,20 @@ class Router extends Component {
 							<Route path="/"
 							exact
 							render={(props)=><HomeLogic {...props}
+														currentSlideId={this.state.currentSlideId}
 														changeCurrentSlideId={(id) => this.changeCurrentSlideId(id)}
 														scrollDuration={this.state.scrollDuration} />} />
 
 							<Route path="/works"
 								   exact
 								   render={(props)=> <Works {...props}
+															leadNeedsTransition={this.state.leadNeedsTransition}
+															scrollDuration={this.state.scrollDuration} />} />
+
+							<Route path="/works/video"
+								   exact
+								   render={(props)=> <Video {...props}
+															currentSlideId={this.state.currentSlideId}
 															leadNeedsTransition={this.state.leadNeedsTransition}
 															scrollDuration={this.state.scrollDuration} />} />
 
@@ -188,6 +235,12 @@ class Router extends Component {
 							render={(props)=> <Jobs {...props}
 													leadNeedsTransition={this.state.leadNeedsTransition}
 													scrollDuration={this.state.scrollDuration} />} />
+
+							<Route path="/policy"
+								   exact
+								   render={(props)=> <Policy {...props}
+															leadNeedsTransition={this.state.leadNeedsTransition}
+															scrollDuration={this.state.scrollDuration} />} />
 
 						</Switch>
 					</CSSTransition>
