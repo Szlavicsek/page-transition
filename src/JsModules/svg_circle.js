@@ -4,7 +4,7 @@ let btn = {
     'stopped' : 0,
     "svgSelector": undefined,
     "btnAnim": undefined,
-    'next' : function(sec, loadNext) {
+    'next' : function(sec, loadNext, disableButton) {
         if (btn.stopped===1) {
             return false;
         }
@@ -13,7 +13,7 @@ let btn = {
 
         btn.btnAnim = setInterval(function () {
             if (btn.progress === 347) {
-                // animatieTextDown()
+                disableButton()
             }
             if (btn.progress < 347) {
                 btn.progress = btn.progress < 358 ? btn.progress + (10/sec) : 0
@@ -28,7 +28,7 @@ let btn = {
             if (document.querySelector('.active .circleStroke')) {
                 document.querySelector('.active .circleStroke').setAttribute("d", btn.describeArc(27, 27, 25, btn.afterburn, btn.progress));
             }
-            if (btn.progress >= 358) {
+            if (btn.progress === 358) {
                 loadNext() // load next slide + animate text up.
             }
         }, 40);

@@ -1,12 +1,15 @@
 import React from 'react';
 import styles from './Navigation.module.scss'
+import {useContext} from 'react';
 import { NavLink } from 'react-router-dom'
+import {GlobalContext} from "../../Contexts/GlobalContext";
 
 const Navigation = (props) => {
+	const context = useContext(GlobalContext);
 	return (
-		<header id='header'>
-			<nav className="desktop-navigation-wrapper unfixed">
-				<NavLink exact to="/" className={styles.melkweg_logo_wrapper} style={{transform: "scale(0.9)"}}>
+		<header id='header' className="preventTransition">
+			<nav className="desktop-navigation-wrapper">
+				<NavLink exact to="/" className={styles.melkweg_logo_wrapper} style={{transform: "scale(0.9)"}} onClick={(e) => context.checkPreventDefault(e)}>
 					{/*onClick={(e) => props.checkPreventDefault(e)}*/}
 					<svg version="1.1" className={styles.melkweg_logo} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
 						 viewBox="0 0 48.189 48.189" enableBackground="new 0 0 48.189 48.189">
@@ -20,6 +23,7 @@ const Navigation = (props) => {
 					<NavLink
 						exact
 						to="/works"
+						onClick={(e) => context.checkPreventDefault(e)}
 						className={styles.link_wrapper}
 						activeClassName={styles.link_active}>
 						<span className={styles.link_text}>Works</span>
@@ -28,6 +32,7 @@ const Navigation = (props) => {
 					<NavLink
 						exact
 						to="/company"
+						onClick={(e) => context.checkPreventDefault(e)}
 						className={styles.link_wrapper}
 						activeClassName={styles.link_active}>
 						<span className={styles.link_text}>Company</span>
@@ -36,6 +41,7 @@ const Navigation = (props) => {
 					<NavLink
 						exact
 						to="/contact"
+						onClick={(e) => context.checkPreventDefault(e)}
 						className={styles.link_wrapper}
 						activeClassName={styles.link_active}>
 						<span className={styles.link_text}>Contact</span>
@@ -44,6 +50,7 @@ const Navigation = (props) => {
 					<NavLink
 						exact
 						to="/jobs"
+						onClick={(e) => context.checkPreventDefault(e)}
 						className={styles.link_wrapper}
 						activeClassName={styles.link_active}>
 						<span className={styles.link_text}>Jobs</span>

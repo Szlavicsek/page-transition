@@ -1,7 +1,7 @@
 @import "../../assets/scss/variables.module";
 @import "../../assets/scss/mixins.module";
 
-:global(.lead_caption_container) {
+:global .lead_caption_container {
   visibility: hidden;
   z-index: 1;
   width: 100%;
@@ -9,7 +9,7 @@
   pointer-events: none;
 }
 
-:global(.lead_caption_inner) {
+:global .lead_caption_inner {
   top: 50%;
   transform: translateY(-50%);
   position: relative;
@@ -227,7 +227,7 @@
 .absolutely {
   position: absolute;
   bottom: -120px;
-  left: 0%;
+  left: -10px;
   display: flex;
   justify-content: center;
 }
@@ -313,6 +313,9 @@
     width: 50px;
     transform: translateY(50%) scale(0);
     color: transparent;
+  }
+  51% {
+    opacity: 0;
   }
   //50%-100%: safety padding to avoid unintended flashes
 }

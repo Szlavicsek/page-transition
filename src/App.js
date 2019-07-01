@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import Router from "./router/Router"
+import { GlobalProvider } from './Contexts/GlobalContext'
 import { createGlobalStyle } from 'styled-components'
 
 import './App.css';
@@ -46,9 +47,12 @@ function App() {
 
   return (
       <>
-        <BrowserRouter>
-          <Router />
-        </BrowserRouter>
+          <GlobalStyle />
+          <GlobalProvider>
+            <BrowserRouter>
+                <Router />
+            </BrowserRouter>
+          </GlobalProvider>
       </>
   );
 }

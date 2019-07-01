@@ -78,6 +78,9 @@
   &:hover {
     cursor: pointer
   }
+  * {
+    visibility: hidden;
+  }
 }
 
 :global .circle-button--animated-in  {
@@ -96,7 +99,6 @@
     transform: scale(0.3)
   }
 }
-
 
 
 
@@ -156,6 +158,9 @@
 
 :global(.animatedCircleButton) {
   visibility: visible !important;
+  * {
+    visibility: visible !important;
+  }
   animation: popup .5s;
 }
 

@@ -13,3 +13,10 @@
   object-fit: cover;
   transition: all .4s;
 }
+
+:global .preventTransition {
+  transition: all 0s !important;
+  * {
+    transition: all 0s !important
+  }
+}

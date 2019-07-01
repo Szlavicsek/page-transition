@@ -7,6 +7,7 @@ import office from "../../assets/images/og-services.jpg";
 import FooterWithShowcase from '../../Components/Footers/FooterWithShowcase/FooterWithShowcase'
 import Button from '../../Components/Buttons/Button/Button'
 import AOS from "aos";
+import {GlobalContext} from "../../Contexts/GlobalContext";
 
 class Contact extends Component {
 
@@ -41,7 +42,7 @@ class Contact extends Component {
 
 	componentDidMount() {
 		// help.pageTransition({height: 60, timeout: 500, scrollDuration: this.props.scrollDuration, backgroundImage: image, needsTransition: this.props.leadNeedsTransition});
-		help.pageTransition({height: 60, timeout: 500, scrollDuration: this.props.scrollDuration, backgroundColor: "#FFF", needsTransition: this.props.leadNeedsTransition});
+		help.pageTransition({height: 60, timeout: 500, scrollDuration: 0, backgroundColor: "#FFF", needsTransition: this.context.state.leadNeedsTransition});
 		help.changeLeadText(["Every relationship starts", "with a simple hello"], "It might just be the start of something memorable", "black", "left-top");
 		setTimeout(() => { help.animateLeadTextUp() }, 800); //=> help.changeleadtext
 		setTimeout(() => { AOS.refresh() }, 1500); //=> help.pagetransition
@@ -149,10 +150,11 @@ class Contact extends Component {
 					{/*<img className={styles.hello_image} src={helloimage} alt="helloimage"/>*/}
 				</section>
 
-				{/*<FooterWithShowcase  projects={this.props.projects} renderedProjects={this.props.rendered.footerProjects}/>*/}
+				<FooterWithShowcase/>
 			</div>
 		);
 	}
 }
 
+Contact.contextType = GlobalContext;
 export default Contact;

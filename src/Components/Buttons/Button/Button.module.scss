@@ -32,4 +32,9 @@
   visibility: hidden;
   text-decoration: none;
   line-height: 48px;
+  transition: all .3s;
+  &:hover {
+    background-color: white;
+    color: black;
+  }
 }

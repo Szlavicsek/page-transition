@@ -1,5 +1,6 @@
 import React from "react"
 import ReactDOMServer from 'react-dom/server';
+import Button from "../Components/Buttons/Button/Button";
 
 export const pageTransition = (params) => {
 	const $lead = document.querySelector('.lead');
@@ -10,7 +11,6 @@ export const pageTransition = (params) => {
 
 	const changeLead = () => {
 		if (params.backgroundColor) {
-			$colorLayer.style.transition = "all 0s";
 			$colorLayer.style.backgroundColor = params.backgroundColor;
 			$colorLayer.style.opacity = 1;
 			$colorLayer.style.zIndex = 1;
@@ -48,8 +48,10 @@ export const pageTransition = (params) => {
 			$canvasLayer.style.opacity = 0;
 		}
 
-		$lead.style.transition = "height .7s ease, background .4s ease, opacity .4s"; // visszatérő animáció paraméterei. itt csak azért kell h a .4s deklarálva legyen, hogy ne vesszen el a .7s delkarálása közben
+		$lead.style.transition = "height .7s ease, opacity .4s"; // visszatérő animáció paraméterei. itt csak azért kell h a .4s deklarálva legyen, hogy ne vesszen el a .7s delkarálása közben
 	};
+	
+	// a főoldalról videós aloldalra ugráskor keletkező gombócot itt kell megoldani
 
 	if (params.needsTransition) {
 		setTimeout(function () {
@@ -66,6 +68,8 @@ export const pageTransition = (params) => {
 	}, params.timeout + params.scrollDuration + 300);
 };
 
+//**********************************************************************************************************************
+
 export const makeLeadTransparent = (timeout) => {
 	setTimeout(() => {
 		// document.querySelector('#lead__layer--color').style.backgroundColor = "transparent";
@@ -78,15 +82,19 @@ export const makeLeadTransparent = (timeout) => {
 
 export const changeHeaderTextColor = (color) => {
 	const $header = document.querySelector('#header');
-	if ($header.classList.contains("transitioning")) {
-		setTimeout(() => $header.className = `transitioning ${color}-text`, 500)
+	if ($header.classList.contains("preventTransition")) {
+		setTimeout(() => $header.className = ` preventTransition ${color}-text`, 500)
 	} else {
 		$header.className = `${color}-text`
 	}
 };
 
+//**********************************************************************************************************************
+
 export const changeLeadText = (title, subtitle, color, position, hasCountDown = false) => {
-	changeHeaderTextColor(color);
+	setTimeout(function () {
+		changeHeaderTextColor(color);
+	}, 400);
 
 	setTimeout(() => {
 		const newLeadTitleRows = ReactDOMServer.renderToStaticMarkup(
@@ -110,6 +118,9 @@ export const changeLeadText = (title, subtitle, color, position, hasCountDown = 
 										{i === array.length -1 && hasCountDown ? <span id="countdown"></span> : ""}
 									</React.Fragment>})}
 					</p>
+					{/*{ hasCountDown ?*/}
+						{/*<a href="/">hello</a> : ""*/}
+					{/*}*/}
 				</div>
 			</div>
 		);
@@ -119,48 +130,52 @@ export const changeLeadText = (title, subtitle, color, position, hasCountDown = 
 	}, 750)
 };
 
-export const listenForTop100px = () => {
+//**********************************************************************************************************************
+
+export const handleNavbarBehavior = () => {
 	let isInTop100px = false;
-	const $navigation = document.querySelector('.desktop-navigation-wrapper');
+	const $navigation = document.querySelector('#header');
 
 	const onPin = () => {
-		$navigation.classList.add('pinned');
-		$navigation.classList.remove('unpinned');
-		$navigation.classList.remove('unfixed');
+		if ($navigation) {
+			$navigation.classList.add('pinned');
+			$navigation.classList.remove('unpinned');
+			$navigation.classList.remove('unfixed');
+		}
 	};
 
 	const onUnpin = () => {
-		$navigation.classList.remove('pinned');
-		$navigation.classList.add('unpinned');
-		$navigation.classList.remove('unfixed');
+		if ($navigation) {
+			$navigation.classList.remove('pinned');
+			$navigation.classList.add('unpinned');
+			$navigation.classList.remove('unfixed');
+		}
 	};
 
 	const onUnfix = () => {
-		$navigation.classList.add('unfixed');
-		$navigation.classList.remove('pinned');
-		$navigation.classList.remove('unpinned');
+		if ($navigation) {
+			$navigation.classList.add('unfixed');
+			$navigation.classList.remove('pinned');
+			$navigation.classList.remove('unpinned');
+			$navigation.style.transform = 'translateY(0)';
+		}
 	};
-
-	// window.onscroll = function(e) {
-	// 	// 	if (this.scrollY < 5) {
-	// 	// 		onUnfix()
-	// 	// 	} else if (!$navigation.classList.contains("unpinned")) {
-	// 	// 		onUnpin()
-	// 	// 	}
-	// 	// 	this.oldScroll = this.scrollY;
-	// 	// };
 
 	window.onscroll = function(e) {
 		if (this.scrollY < 5) {
 			onUnfix()
+			
 		} else {
 			if (this.oldScroll > this.scrollY) { //up
-				if (!$navigation.classList.contains("pinned")) {
+				if ($navigation && !$navigation.classList.contains("pinned") && this.scrollY > 500) {
 					onPin()
 				}
 			} else {
-				if (!$navigation.classList.contains("unpinned")) {
-					onUnpin()
+				if ($navigation && $navigation.classList.contains('unfixed') && this.scrollY > 500) {
+					$navigation.style.transform = 'translateY(-150px)';
+				}
+				if ($navigation && !$navigation.classList.contains("unpinned") && !$navigation.classList.contains("unfixed") && this.scrollY > 500) {
+					onUnpin();
 				}
 			}
 		}
@@ -177,6 +192,8 @@ export const listenForTop100px = () => {
 		}
 	})
 };
+
+//**********************************************************************************************************************
 
 export const animateLeadTextUp = (titleId = 6) => {
 	Array.from(document.querySelectorAll(`#caption_box_${titleId} .lead_title_row`)).forEach((row, index, array) => {
@@ -213,6 +230,8 @@ export const animateLeadTextUp = (titleId = 6) => {
 	});
 };
 
+//**********************************************************************************************************************
+
 export const animateLeadTextDown = (titleId = 6) => {
 	Array.from(document.querySelectorAll(`#caption_box_${titleId} .lead_title_row`)).forEach((row, index, array) => {
 		const timeoutForNextRow = index * 50; // a két sor felbukkanása közti különbség
@@ -242,4 +261,45 @@ export const animateLeadTextDown = (titleId = 6) => {
 			}
 		}
 	});
+};
+
+//**********************************************************************************************************************
+
+export const getScrollDuration = (arg = null) => {
+	let scrollDuration;
+	if (window.pageYOffset < 200) {
+		scrollDuration = 0
+	} else if (window.pageYOffset < 1000) {
+		scrollDuration = 500
+	} else if (window.pageYOffset > 1000 && window.pageYOffset < 3000) {
+		scrollDuration = 1000
+	} else {
+		scrollDuration = 1000
+	}
+	
+	return scrollDuration
+};
+
+export const resetLead = () => {
+	setTimeout(function () {
+		document.querySelector('#slideMedia1').currentTime = 0;
+		document.querySelector('#slideMedia1').pause();
+		document.querySelector('#slideContainer0').style.zIndex = 0;
+		document.querySelector('#slideMedia0').style.height = "100%";
+		
+		document.querySelector('#slideContainer1').style.zIndex = -1;
+		document.querySelector('#slideMedia1').style.height = 0;
+		
+		document.querySelector('#slideContainer2').style.zIndex = -2;
+		document.querySelector('#slideMedia2').style.height = 0;
+		
+		document.querySelector('#slideContainer3').style.zIndex = -3;
+		document.querySelector('#slideMedia3').style.height = 0;
+		
+		document.querySelector('#slideContainer4').style.zIndex = -4;
+		document.querySelector('#slideMedia4').style.height = 0;
+		
+		document.querySelector('#slideContainer5').style.zIndex = -5;
+		document.querySelector('#slideMedia5').style.height = 0;
+	}, 1000)
 };

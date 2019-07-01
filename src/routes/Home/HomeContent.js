@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { withRouter } from "react-router-dom"
 import LeadText from "../../Components/LeadText/LeadText"
-import SliderProgressButton from "../../Components/Buttons/SliderProgressButton/SliderProgressButton"
 import styles from './HomeContent.module.scss'
 import sample from "../../assets/media/sample.mp4"
-import image from "../../assets/media/96ADC2750551C6E70B719990D9D2C09236856C21.jpg"
-import * as help from "../../JsModules/helper";
+import image from "../../assets/images/c2.jpg"
 
 class HomeContent extends Component {
 
@@ -34,10 +32,10 @@ class HomeContent extends Component {
 						buttonText="Explore our work"
 						linkto="/works/video"
 						subtitle={"We are a digital agency"}/>
-					<div id="slideMedia1" className={this.props.className} style={{overflow: "hidden", height: "0%"}}>
+					{/*<div id="slideMedia1" className={this.props.className} style={{overflow: "hidden", height: "0%"}}>*/}
 						{/*a videókat be kell rakni egy wrapperbe, mert a 0% height valamiért nem hatja meg*/}
-						<video src={sample} className={this.props.className} loop muted></video>
-					</div>
+						<video id="slideMedia1" src={sample} className={this.props.className} loop muted style={{overflow: "hidden", height: "0%"}}></video>
+					{/*</div>*/}
 				</div>
 
 				<div id="slideContainer2" className={`slideContainer ${styles.slide_container}`} style={{zIndex: -2}}>

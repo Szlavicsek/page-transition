@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import { GlobalContext } from "../../Contexts/GlobalContext";
+import AOS from 'aos'
 import styles from "./Jobs.module.scss"
 import * as help from "../../JsModules/helper";
 import OwlCarousel from 'react-owl-carousel';
@@ -59,7 +61,8 @@ class Jobs extends Component {
 		const number = document.querySelector('.owl-item.active').firstElementChild.getAttribute("data-nth")
 		if (this.activeSlide !== number) { // can't update state neither here nor in this.handleChange (breaks carousel animation)
 			this.activeSlide = number;
-			this.refs.counter.innerText = this.activeSlide
+			
+			document.querySelector('#counter').innerText = this.activeSlide
 		}
 	}
 
@@ -108,10 +111,10 @@ class Jobs extends Component {
 			this.caption = ["We're always looking", "for junior and", "senior talents"]
 		}
 		// help.pageTransition({height: 60, timeout: 500 + this.props.scrollDuration, backgroundColor: "transparent"});
-		help.pageTransition({height: 60, timeout: 500, scrollDuration: this.props.scrollDuration, backgroundColor: "#FFF", needsTransition: this.props.leadNeedsTransition});
+		help.pageTransition({height: 60, timeout: 500, scrollDuration: 0, backgroundColor: "#FFF", needsTransition: this.context.state.leadNeedsTransition});
 		help.changeLeadText(this.caption, "Let's do great work together", "black", "left-top");
 		setTimeout(() => { help.animateLeadTextUp(6) }, 800); //=> help.changeleadtext
-		// setTimeout(() => { AOS.refresh() }, 1500); //=> help.pagetransition
+		setTimeout(() => { AOS.refresh() }, 1500); //=> help.pagetransition
 
 		const slides = this.carouselImages.map((x, i)=> {
 			// const img = imagePath(`./${x}.jpg`);
@@ -129,40 +132,45 @@ class Jobs extends Component {
 
 	render() {
 		return (
-			<div className={styles.wrapper}>
-
-				<div className={`${styles.carousel} lead_image`}>
-					<div className={styles.page_top}></div>
-					<div className={styles.media_wrapper_inner}>
-						<OwlCarousel {...this.options} onRefreshed={() => this.handleRefresh()} onTranslate={() => this.handleChange()} className={`owl-theme ${styles.owl_carousel}`} >
-							{ this.state.slides }
-						</OwlCarousel>
-					</div>
-					<div className={styles.counter_wrapper}>
-						<div className={styles.counter}>
-							<span className={styles.current_image_index} ref="counter">1</span>
-							<span className={styles.line}></span>
-							<span className={styles.total_image_number} ref="total">{this.state.slides.length}</span>
+			<GlobalContext.Consumer>
+				{(context) => (
+				<div className={styles.wrapper}>
+	
+					<div className={`${styles.carousel} lead_image`}>
+						<div className={styles.page_top}></div>
+						<div className={styles.media_wrapper_inner}>
+							<OwlCarousel {...this.options} onRefreshed={() => this.handleRefresh()} onTranslate={() => this.handleChange()} className={`owl-theme ${styles.owl_carousel}`} >
+								{ this.state.slides }
+							</OwlCarousel>
+						</div>
+						<div className={styles.counter_wrapper}>
+							<div className={styles.counter}>
+								<span id="counter" className={styles.current_image_index}>1</span>
+								<span className={styles.line}></span>
+								<span className={styles.total_image_number}>{this.state.slides.length}</span>
+							</div>
 						</div>
 					</div>
+	
+					<section className={styles.company_description}>
+						<CompanyDescription />
+					</section>
+					<section className={styles.open_positions}>
+						<div className={styles.inner}>
+							<h1 className={styles.positions_header}>Open Positions</h1>
+							<div className={styles.positions_container}>
+								{/*{this.context.state.}*/}
+								{ context.state.rendered.openPositions }
+								<p className={styles.job_p}>Not on the list? Though we’re always interested to meet new talents.
+									<br/>
+									Send us your CV at <a className={styles.mailto} href="mailto:jobs@melkweg.hu">jobs@melkweg.hu</a> and we'll take a look.</p>
+							</div>
+						</div>
+					</section>
+					<FooterWithShowcase />
 				</div>
-
-				<section className={styles.company_description}>
-					<CompanyDescription />
-				</section>
-				<section className={styles.open_positions}>
-					<div className={styles.inner}>
-						<h1 className={styles.positions_header}>Open Positions</h1>
-						<div className={styles.positions_container}>
-							{/*{ this.props.rendered.jobs }*/}
-							<p className={styles.job_p}>Not on the list? Though we’re always interested to meet new talents.
-								<br/>
-								Send us your CV at <a className={styles.mailto} href="mailto:jobs@melkweg.hu">jobs@melkweg.hu</a> and we'll take a look.</p>
-						</div>
-					</div>
-				</section>
-				{/*<FooterWithShowcase projects={this.props.projects} renderedProjects={this.props.rendered.footerProjects} />*/}
-			</div>
+				)}
+			</GlobalContext.Consumer>
 		);
 	}
 }
