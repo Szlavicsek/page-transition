@@ -280,6 +280,8 @@ export const getScrollDuration = (arg = null) => {
 	return scrollDuration
 };
 
+//**********************************************************************************************************************
+
 export const resetLead = () => {
 	setTimeout(function () {
 		document.querySelector('#slideMedia1').currentTime = 0;

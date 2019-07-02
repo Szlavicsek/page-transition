@@ -111,7 +111,6 @@ class HomeLogic extends Component {
                                 // $PreviousSlideMedia.style.transform = "scale(1.2)";
 
                                 $PreviousSlideContainer.style.zIndex = -2;
-                                console.log("setting nextbuttondis to true")
                                 this.setState({nextButtonDisabled: false}) // ebből esetleg még lehet egy global state egy szinttel feljebb ami pont a description fade előtt hív meg
                             }.bind(this), 2000)
                         }

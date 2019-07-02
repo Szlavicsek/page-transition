@@ -84,10 +84,11 @@
 }
 
 .link_text {
-  @include Avenir-Black-M(bold);
+  @include Avenir-Black-M(normal);
   transition: transform .3s, color .5s;
   position: absolute;
   color: #FFF;
+  pointer-events: none;
 }
 
 .wave_icon {

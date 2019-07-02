@@ -13,7 +13,7 @@ const Button = (props) => {
 		)
 	} else {
 		return (
-			<button onClick={props.onClickHandler ? () => props.onClickHandler() : ""} type={props.type === "submit" ? "submit" : "button"} className={`${styles.button} ${props.customClass ? props.customClass : ""}`}>{props.text}</button>
+			<button onClick={props.onClickHandler ? () => props.onClickHandler() : null} type={props.type === "submit" ? "submit" : "button"} className={`${styles.button} ${props.customClass ? props.customClass : ""}`}>{props.text}</button>
 		);
 	}
 };

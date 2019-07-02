@@ -21,6 +21,7 @@ import Policy from "../routes/Policy/Policy";
 import NotFound from '../routes/NotFound/NotFound'
 import Cookie from '../Components/Cookie/Cookie'
 import LoadingScreen from "../routes/LoadingScreen/LoadingScreen";
+import Cursor from '../Components/Cursor/Cursor'
 
 let scroll = Scroll.animateScroll;
 
@@ -117,10 +118,8 @@ class Router extends Component {
 			help.resetLead();
 			this.context.changeCurrentHomePageSlideId(0)
 		} else {
-			console.log("hoorey")
 			setTimeout(help.animateLeadTextDown);
 			const $button = document.querySelector('#button6');
-			console.log($button)
 			if ($button) { // ezt nem lehet átvonni a helper.js-be, mert akkor minden alkalommal leanimálódna a gomb ami a slideok kört nem jó
 				$button.classList.add("mainButtonDisappearing"); // button__animating--in
 				setTimeout(() => { $button.style.opacity = 0 }, 800);
@@ -187,6 +186,7 @@ class Router extends Component {
 						</CSSTransition>
 					</TransitionGroup>
 					<Cookie />
+					<Cursor />
 				</>: "" }
 			</>
 

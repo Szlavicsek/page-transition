@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import { GlobalContext } from "../../Contexts/GlobalContext";
 import FooterWithShowcase from "../../Components/Footers/FooterWithShowcase/FooterWithShowcase"
 import ProjectSummary from "../../Components/WorkTemplateComponents/ProjectSummary/ProjectSummary"
+import {TweenMax, Power2, TimelineLite} from "gsap/TweenMax";
+import ScrollMagic from "scrollmagic"
 
 import { withRouter } from "react-router-dom"
 import AOS from 'aos'
@@ -10,13 +12,11 @@ import styles from "./Video.module.scss"
 import * as help from "../../JsModules/helper";
 
 import img from '../../assets/images/c2.jpg'
-
 import sampleVideo from '../../assets/media/sample.mp4'
 
-import leadImage from "../../assets/images/pexels-photo-39811.jpeg"
-import logo1 from "../../assets/images/cisco.PNG"
-
 class Video extends Component {
+	
+	Controller = new ScrollMagic.Controller();
 
 	componentDidMount() {
 		setTimeout(() => document.querySelector('#header').classList.remove("preventTransition"), 1000);
@@ -32,6 +32,17 @@ class Video extends Component {
 		}
 
 		setTimeout(() => { AOS.refresh() }, 1500); //=> help.pagetransition
+		const $leadVideo = document.querySelector('#slideMedia1');
+		const videoControl = new ScrollMagic.Scene({triggerHook: 0, triggerElement: ".lead", duration: "100%"})
+			.on("enter", function (e) {
+				if ($leadVideo.paused) {
+					$leadVideo.play();
+				}
+			})
+			.on("leave", function (e) {
+				$leadVideo.pause();
+			})
+			.addTo(this.Controller);
 	}
 
 	render() {
